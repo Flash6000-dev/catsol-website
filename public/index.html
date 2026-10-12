@@ -1,0 +1,786 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Catalyst Solutions (CATSOL) — Digital foundations that scale</title>
+  <meta name="description" content="Catalyst Solutions designs and implements digital systems to improve business efficiency, visibility and scalability. Meet FAB-OS, a workflow operating system for fabrication.">
+  <meta name="author" content="Catalyst Solutions">
+  <meta name="theme-color" content="#0c0e12">
+  <meta name="color-scheme" content="dark">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Catalyst Solutions (CATSOL)">
+  <meta property="og:description" content="Digital foundations that scale. Systems that improve business efficiency, visibility and scalability.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@CatalystSolu">
+  <link rel="icon" type="image/png" href="assets/favicon-32.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <script>
+    // Enable motion-dependent layout only when the user has not asked for reduced motion.
+    (function () {
+      var m = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)');
+      document.documentElement.classList.add(m && m.matches ? 'reduced' : 'motion-ok');
+      document.documentElement.classList.add('js');
+    })();
+  </script>
+</head>
+<body>
+
+<!-- Page atmosphere: one fixed, non-interactive layer behind everything below the hero.
+     Two technical grids at different parallax rates, a slow accent light and a datum spine.
+     Driven by the single scroll handler (js/scenes.js); static under reduced motion. -->
+<div class="atmos" id="atmos" aria-hidden="true">
+  <div class="atmos__glow"></div>
+  <div class="atmos__grid atmos__grid--coarse"></div>
+  <div class="atmos__grid atmos__grid--fine"></div>
+  <div class="atmos__spine"><span class="atmos__fill"></span></div>
+</div>
+
+<!-- Icon sprite (inline SVG, no emoji icons) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2z"/></symbol>
+    <symbol id="i-linkedin" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10.5V17M8 7.5v.01M12 17v-6.5M12 13.5a3 3 0 016 0V17"/></symbol>
+    <symbol id="i-rfq" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></symbol>
+    <symbol id="i-estimate" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 11h2M12 11h2M8 15h2M12 15h2M8 18h8"/></symbol>
+    <symbol id="i-quote" viewBox="0 0 24 24"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/></symbol>
+    <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V4M7 9l5-5 5 5M5 20h14"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 14a4 4 0 005.7 0l3-3a4 4 0 00-5.7-5.7l-1 1M14 10a4 4 0 00-5.7 0l-3 3a4 4 0 005.7 5.7l1-1"/></symbol>
+    <symbol id="i-job" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 012-2h2a2 2 0 012 2v2M3 13h18"/></symbol>
+    <symbol id="i-factory" viewBox="0 0 24 24"><path d="M3 21V11l6 4v-4l6 4V5h6v16z"/></symbol>
+    <symbol id="i-truck" viewBox="0 0 24 24"><path d="M3 6h11v10H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/></symbol>
+    <symbol id="i-gauge" viewBox="0 0 24 24"><path d="M4 18a8 8 0 1116 0M12 18l4-6"/></symbol>
+    <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 6a2 2 0 012-2h4l2 2h8a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+    <symbol id="i-nest" viewBox="0 0 24 24"><path d="M4 4h8v8H4zM14 4h6v5h-6zM14 11h6v9h-6zM4 14h8v6H4z"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 5l12 7-12 7z"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><path d="M8 5v14M16 5v14"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 4l9 16H3zM12 10v4M12 17v.01"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-layers" viewBox="0 0 24 24"><path d="M12 3l9 5-9 5-9-5zM3 13l9 5 9-5"/></symbol>
+    <symbol id="i-flow" viewBox="0 0 24 24"><circle cx="5" cy="6" r="2"/><circle cx="19" cy="12" r="2"/><circle cx="5" cy="18" r="2"/><path d="M7 6h5a3 3 0 013 3v1M7 18h5a3 3 0 003-3v-1"/></symbol>
+  </defs>
+</svg>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- ============ NAV ============ -->
+<header class="nav" id="nav">
+  <div class="container nav__inner">
+    <a class="brand" href="#top" aria-label="Catalyst Solutions — home">
+      <img src="assets/catsol-logo-128.png" width="40" height="40" alt="">
+      <span class="brand__text"><strong>CATSOL</strong><span>Catalyst Solutions</span></span>
+    </a>
+    <nav class="nav__links" aria-label="Primary">
+      <a href="#about">About</a>
+      <a href="#gap">The gap</a>
+      <a href="#fab-os">FAB-OS</a>
+      <a href="#workflow">Workflow</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="btn btn--primary btn--sm nav__cta" href="#contact">Get in touch</a>
+    <button class="nav__toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="mobileMenu" aria-label="Open menu">
+      <svg class="ico" aria-hidden="true"><use href="#i-menu"/></svg>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu" hidden>
+    <nav aria-label="Mobile">
+      <a href="#about">About</a>
+      <a href="#gap">The gap</a>
+      <a href="#fab-os">FAB-OS</a>
+      <a href="#workflow">Workflow</a>
+      <a href="#material-planning">Material Planning</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="top" aria-labelledby="hero-title">
+  <div class="hero__stage">
+    <div class="hero__bg" aria-hidden="true">
+      <img src="assets/hero-network.jpg" width="1920" height="1080" alt="" fetchpriority="high" decoding="async">
+    </div>
+    <div class="hero__grid" aria-hidden="true"></div>
+
+    <div class="hero__gl" id="heroGl" aria-hidden="true">
+      <canvas id="heroCanvas"></canvas>
+      <!-- Static fallback: front elevation of a fabricated sheet-metal assembly -->
+      <svg class="hero__fallback" viewBox="0 0 400 520" role="img" aria-label="Line drawing of a fabricated sheet-metal assembly with a connected workflow path">
+        <g fill="none" stroke="#00bdd6" stroke-width="1.4" opacity=".9">
+          <rect x="70" y="40" width="260" height="440" rx="6"/>
+          <rect x="92" y="62" width="216" height="396" rx="3" opacity=".5"/>
+          <g opacity=".85">
+            <rect x="112" y="98" width="20" height="52"/><rect x="138" y="98" width="20" height="52"/><rect x="164" y="98" width="20" height="52"/><rect x="190" y="98" width="20" height="52"/><rect x="216" y="98" width="20" height="52"/><rect x="242" y="98" width="20" height="52"/>
+            <rect x="112" y="210" width="26" height="52"/><rect x="144" y="210" width="26" height="52"/><rect x="176" y="210" width="26" height="52"/><rect x="208" y="210" width="26" height="52"/><rect x="240" y="210" width="26" height="52"/>
+            <rect x="112" y="322" width="20" height="52"/><rect x="138" y="322" width="20" height="52"/><rect x="164" y="322" width="20" height="52"/><rect x="190" y="322" width="20" height="52"/><rect x="216" y="322" width="20" height="52"/><rect x="242" y="322" width="20" height="52"/>
+          </g>
+        </g>
+        <path d="M118 120 C170 70 210 190 262 150 S 150 250 200 288 S 280 340 250 420" fill="none" stroke="#00d4ff" stroke-width="2.4"/>
+        <g fill="#6ef0ff"><circle cx="118" cy="120" r="5"/><circle cx="190" cy="150" r="5"/><circle cx="262" cy="150" r="5"/><circle cx="200" cy="288" r="5"/><circle cx="262" cy="330" r="5"/><circle cx="250" cy="420" r="5"/></g>
+      </svg>
+      <ol class="hero__tags" aria-hidden="true">
+        <li data-node="0">RFQ</li>
+        <li data-node="1">Quotation</li>
+        <li data-node="2">Purchase order</li>
+        <li data-node="3">Job</li>
+        <li data-node="4">Production</li>
+        <li data-node="5">Delivery</li>
+      </ol>
+    </div>
+
+    <div class="hero__vignette" aria-hidden="true"></div>
+
+    <div class="container hero__content" id="heroA">
+      <p class="eyebrow"><span class="eyebrow__dot" aria-hidden="true"></span>Catalyst Solutions · CATSOL</p>
+      <h1 id="hero-title" class="display">
+        <span class="line"><span>Digital</span></span>
+        <span class="line"><span>foundations</span></span>
+        <span class="line"><span>that <em>scale.</em></span></span>
+      </h1>
+      <p class="lead hero__lead">We design and implement systems that improve business efficiency, visibility and scalability — turning fragmented tools into one structured operation.</p>
+      <div class="hero__cta">
+        <a class="btn btn--primary" href="#fab-os">Explore FAB-OS <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <a class="btn btn--ghost" href="#contact">Talk to us</a>
+      </div>
+      <ul class="hero__facts" aria-label="At a glance">
+        <li><strong>3</strong><span>integrated interfaces<br><small>Console · HUD · Portal</small></span></li>
+        <li><strong>FAB-OS</strong><span>workflow operating system<br><small>for fabrication businesses</small></span></li>
+      </ul>
+    </div>
+
+    <div class="container hero__story" id="heroB">
+      <p class="eyebrow eyebrow--mono">RFQ → Quotation → Purchase order → Job → Production → Delivery</p>
+      <h2 class="story-title">One connected flow, instead of disconnected tools.</h2>
+      <p class="lead">FAB-OS is being designed to connect the stages of a fabrication job, from enquiry to delivery, in one workflow.</p>
+    </div>
+
+    <a class="scroll-cue" href="#about" aria-label="Scroll to About section"><span></span></a>
+  </div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section class="section about" id="about" aria-labelledby="about-title">
+  <div class="container about__grid">
+    <div class="about__lead" data-reveal>
+      <p class="eyebrow eyebrow--mono">About CATSOL</p>
+      <h2 id="about-title" class="h2">A digital solutions firm that designs and implements systems for efficiency, visibility and scalability.</h2>
+    </div>
+    <div class="about__body">
+      <p class="lead" data-reveal>When off-the-shelf tools fall short, we build digital platforms that bring structure to complex operations. Our products are purpose-built to solve real business problems. FAB-OS is being designed with system-level integration in mind.</p>
+      <p class="tagline" data-reveal style="--i:1">Driving transformation through strategic innovation.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MISSION & VISION (two compositions; in-view scrubs, no pinning) ============ -->
+<section class="pv" id="purpose" aria-labelledby="pv-title">
+  <div class="container">
+    <h2 id="pv-title" class="eyebrow eyebrow--mono pv__title">Mission &amp; vision</h2>
+
+    <!-- Mission: present purpose. A structured grid draws down, then the statement is read in sequence. -->
+    <article class="pv__mission" id="mission" aria-labelledby="mission-t" data-reveal>
+      <div class="m-grid" aria-hidden="true">
+        <i style="--k:0"></i><i style="--k:1"></i><i style="--k:2"></i><i style="--k:3"></i><i style="--k:4"></i><i style="--k:5"></i><i style="--k:6"></i>
+        <b class="m-rule m-rule--top"></b><b class="m-rule m-rule--bot"></b>
+      </div>
+      <h3 id="mission-t" class="pv__label">Mission</h3>
+      <p class="m-text">To serve as the strategic catalyst that empowers enterprises of every scale — balancing digitalization with business objectives.</p>
+    </article>
+
+    <!-- Vision: longer-term ambition. Layered frames open outward behind the statement. -->
+    <article class="pv__vision" id="vision" aria-labelledby="vision-t" data-reveal>
+      <svg class="v-frames" viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+        <path class="v-horizon" d="M0 250H800"/>
+        <rect style="--k:0" x="250" y="155" width="300" height="190" rx="6"/>
+        <rect style="--k:1" x="250" y="155" width="300" height="190" rx="6"/>
+        <rect style="--k:2" x="250" y="155" width="300" height="190" rx="6"/>
+        <rect style="--k:3" x="250" y="155" width="300" height="190" rx="6"/>
+        <rect style="--k:4" x="250" y="155" width="300" height="190" rx="6"/>
+        <path class="v-cross" d="M392 250h16M400 242v16"/>
+      </svg>
+      <div class="v-copy">
+        <h3 id="vision-t" class="pv__label">Vision</h3>
+        <p class="v-text">To redefine global business landscapes by bridging the gap between digital innovation and practical business solutions, fostering a future where simultaneous and inclusive growth is accessible to small, medium, and large-scale enterprises alike.</p>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ============ THE GAP (pinned scrub) ============ -->
+<section class="gap" id="gap" aria-labelledby="gap-title">
+  <div class="gap__pin">
+    <div class="container gap__grid">
+      <div class="gap__copy">
+        <p class="eyebrow eyebrow--mono">The operational gap</p>
+        <h2 id="gap-title" class="h2">Most businesses struggle with fragmented systems that create inefficiency.</h2>
+        <p class="lead">In fabrication, an enquiry passes through several teams before it becomes a delivered job. When each keeps its own records, the job is only as visible as the last message sent.</p>
+        <p class="gap__state" aria-live="polite"><span class="gap__state-a">Scattered across tools and people</span><span class="gap__state-b">One structured record</span></p>
+      </div>
+      <div class="gap__stage" aria-hidden="true">
+        <div class="gap__rail"></div>
+        <div class="src" style="--k:0;--x0:-8;--y0:-120;--r0:-7;--x1:0;--y1:0"><span>Spreadsheets</span></div>
+        <div class="src" style="--k:1;--x0:120;--y0:-60;--r0:6;--x1:0;--y1:0"><span>Email threads</span></div>
+        <div class="src" style="--k:2;--x0:-110;--y0:10;--r0:4;--x1:0;--y1:0"><span>WhatsApp messages</span></div>
+        <div class="src" style="--k:3;--x0:90;--y0:70;--r0:-5;--x1:0;--y1:0"><span>Manual registers</span></div>
+        <div class="src" style="--k:4;--x0:-70;--y0:120;--r0:8;--x1:0;--y1:0"><span>Verbal updates</span></div>
+        <div class="src" style="--k:5;--x0:60;--y0:150;--r0:-3;--x1:0;--y1:0"><span>Manual follow-ups</span></div>
+        <div class="gap__core"><svg class="ico" aria-hidden="true"><use href="#i-layers"/></svg><span>FAB-OS</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHAT IT COSTS (pinned · misregistration) ============ -->
+<section class="costs" id="costs" aria-labelledby="costs-title">
+  <div class="costs__pin">
+    <div class="container costs__grid">
+      <div class="costs__copy">
+        <p class="eyebrow eyebrow--mono">What it costs</p>
+        <h2 id="costs-title" class="costs__title">These gaps compound over time.</h2>
+        <div class="costs__lines">
+          <p class="cs" style="--k:0">Information lives in different places.</p>
+          <p class="cs" style="--k:1">Nobody sees the whole job at once.</p>
+          <p class="cs" style="--k:2">So work waits on messages, calls and follow-ups.</p>
+          <p class="cs cs--end" style="--k:3">The cost is coordination: time and attention spent keeping everyone aligned.</p>
+        </div>
+        <p class="costs__bridge">FAB-OS is being designed with this gap in mind.</p>
+      </div>
+
+      <div class="costs__field">
+        <svg class="costs__datum" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+          <line x1="0" y1="0" x2="100" y2="0" style="--lr:1.6"/>
+          <line x1="0" y1="33.3" x2="100" y2="33.3" style="--lr:-2.4"/>
+          <line x1="0" y1="66.6" x2="100" y2="66.6" style="--lr:3.1"/>
+          <line x1="0" y1="100" x2="100" y2="100" style="--lr:-1.8"/>
+          <line x1="0" y1="0" x2="0" y2="100" style="--lr:2.6"/>
+          <line x1="50" y1="0" x2="50" y2="100" style="--lr:-3.4"/>
+          <line x1="100" y1="0" x2="100" y2="100" style="--lr:1.9"/>
+        </svg>
+        <ul class="costs__tiles" aria-label="Operational gaps">
+          <li class="tile" style="--dx:-30;--dy:-40;--r:-5;--gx:14;--gy:-10"><span class="num">01</span>Tools that don't connect</li>
+          <li class="tile" style="--dx:34;--dy:-14;--r:4;--gx:-12;--gy:12"><span class="num">02</span>Processes dependent on individuals</li>
+          <li class="tile" style="--dx:-18;--dy:22;--r:3;--gx:10;--gy:14"><span class="num">03</span>Limited real-time visibility</li>
+          <li class="tile" style="--dx:26;--dy:38;--r:-6;--gx:-14;--gy:-8"><span class="num">04</span>Manual work slowing execution</li>
+          <li class="tile" style="--dx:-38;--dy:12;--r:6;--gx:12;--gy:10"><span class="num">05</span>Systems that break as businesses grow</li>
+          <li class="tile" style="--dx:20;--dy:-30;--r:-3;--gx:-10;--gy:-14"><span class="num">06</span>Data silos creating blind spots</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAB-OS ============ -->
+<section class="section fabos" id="fab-os" aria-labelledby="fabos-title">
+  <div class="container">
+    <div class="fabos__head">
+      <div data-reveal>
+        <p class="eyebrow eyebrow--mono">Product</p>
+        <h2 id="fabos-title" class="h2"><span class="grad">FAB-OS</span> — a workflow operating system for fabrication.</h2>
+      </div>
+      <div data-reveal style="--i:1">
+        <p class="lead">A proprietary digital platform for the fabrication industry, intended for fabrication and structural-steel companies and designed to connect commercial, material and production work into one continuous workflow.</p>
+        <p class="status"><span class="status__dot" aria-hidden="true"></span>Currently in development, shaped by real fabrication workflows.</p>
+      </div>
+    </div>
+
+    <ul class="principles">
+      <li data-reveal style="--i:0"><svg class="ico" aria-hidden="true"><use href="#i-layers"/></svg><h3>Unified operational data</h3></li>
+      <li data-reveal style="--i:1"><svg class="ico" aria-hidden="true"><use href="#i-flow"/></svg><h3>Connected workflow management</h3></li>
+      <li data-reveal style="--i:2"><svg class="ico" aria-hidden="true"><use href="#i-eye"/></svg><h3>Stakeholder visibility</h3></li>
+      <li data-reveal style="--i:3"><svg class="ico" aria-hidden="true"><use href="#i-link"/></svg><h3>System-level integration</h3></li>
+    </ul>
+
+    <!-- FAB-OS overview: system formation (CSS 3D composition) -->
+    <div class="formation" id="formation" data-reveal>
+      <div class="formation__head">
+        <p class="showcase__intro">Three integrated interfaces, each designed for a specific stakeholder.</p>
+      </div>
+      <div class="formation__body">
+        <div class="formation__stage" aria-hidden="true">
+          <div class="iso">
+            <div class="spine"><i></i></div>
+            <div class="plane plane--portal" style="--z:0">
+              <span class="plane__tag">Portal</span>
+              <i class="blk" style="left:8%;top:30%;width:84%;height:9%"></i>
+              <i class="blk blk--on" style="left:8%;top:30%;width:46%;height:9%"></i>
+              <i class="blk" style="left:8%;top:52%;width:38%;height:30%"></i>
+              <i class="blk" style="left:54%;top:52%;width:38%;height:30%"></i>
+            </div>
+            <div class="plane plane--hud" style="--z:1">
+              <span class="plane__tag">HUD</span>
+              <i class="blk" style="left:8%;top:26%;width:60%;height:8%"></i>
+              <i class="blk" style="left:8%;top:42%;width:76%;height:8%"></i>
+              <i class="blk blk--on" style="left:8%;top:58%;width:52%;height:8%"></i>
+              <i class="blk" style="left:8%;top:74%;width:68%;height:8%"></i>
+              <i class="blk" style="left:78%;top:26%;width:14%;height:14%"></i>
+            </div>
+            <div class="plane plane--console" style="--z:2">
+              <span class="plane__tag">Console</span>
+              <i class="blk" style="left:8%;top:28%;width:14%;height:54%"></i>
+              <i class="blk blk--on" style="left:28%;top:44%;width:14%;height:38%"></i>
+              <i class="blk" style="left:48%;top:36%;width:14%;height:46%"></i>
+              <i class="blk" style="left:68%;top:28%;width:24%;height:24%"></i>
+              <i class="blk" style="left:68%;top:58%;width:24%;height:24%"></i>
+            </div>
+            <div class="docs" id="formDocs"></div>
+          </div>
+        </div>
+
+        <ol class="formation__notes">
+          <li class="fnote" data-plane="console" style="--i:0">
+            <p class="label">For owners &amp; leadership</p>
+            <h3>The Console</h3>
+            <p>Centralized visibility and oversight to support confident decision-making.</p>
+          </li>
+          <li class="fnote" data-plane="hud" style="--i:1">
+            <p class="label">For operations &amp; purchase teams</p>
+            <h3>The HUD</h3>
+            <p>Structured processes that reduce manual effort and support faster execution.</p>
+          </li>
+          <li class="fnote" data-plane="portal" style="--i:2">
+            <p class="label">For customers</p>
+            <h3>The Portal</h3>
+            <p>Transparent communication and clear status visibility, with fewer follow-ups.</p>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ JOURNEY (pinned · horizontal, scroll-driven) ============ -->
+<section class="journey" id="workflow" aria-labelledby="journey-title">
+  <div class="journey__pin">
+    <div class="container journey__head">
+      <div>
+        <p class="eyebrow eyebrow--mono">Workflow</p>
+        <h2 id="journey-title" class="journey__title">One job, from enquiry to delivery.</h2>
+      </div>
+      <p class="journey__note">The sequence FAB-OS is being designed around.</p>
+    </div>
+
+    <div class="journey__viewport">
+      <div class="journey__bg" aria-hidden="true"></div>
+      <div class="journey__nums" aria-hidden="true">
+        <span>01</span><span>02</span><span>03</span><span>04</span><span>05</span><span>06</span>
+      </div>
+
+      <ol class="journey__track">
+        <li class="stop" data-name="RFQ">
+          <div class="stop__in">
+            <div class="stop__art" aria-hidden="true">
+              <svg viewBox="0 0 240 170" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path pathLength="1" d="M78 18h66l30 30v104H78z"/><path pathLength="1" d="M144 18v30h30"/>
+                <path pathLength="1" d="M96 82h60M96 102h60M96 122h38"/><path pathLength="1" d="M14 86h44M44 72l14 14-14 14"/>
+              </svg>
+            </div>
+            <div class="stop__txt">
+              <span class="stop__n">01</span>
+              <h3 class="stop__t">RFQ</h3>
+              <p>The customer's enquiry is the starting point for everything that follows.</p>
+            </div>
+          </div>
+        </li>
+        <li class="stop" data-name="Quotation">
+          <div class="stop__in">
+            <div class="stop__art" aria-hidden="true">
+              <svg viewBox="0 0 240 170" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path pathLength="1" d="M52 18h124v134H52z"/><path pathLength="1" d="M52 52h124M52 86h124M52 120h124M106 52v100"/>
+                <circle pathLength="1" cx="198" cy="40" r="16"/><path pathLength="1" d="M191 40l5 5 9-10"/>
+              </svg>
+            </div>
+            <div class="stop__txt">
+              <span class="stop__n">02</span>
+              <h3 class="stop__t">Quotation</h3>
+              <p>The enquiry is answered with a quotation.</p>
+            </div>
+          </div>
+        </li>
+        <li class="stop" data-name="Purchase order">
+          <div class="stop__in">
+            <div class="stop__art" aria-hidden="true">
+              <svg viewBox="0 0 240 170" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path pathLength="1" d="M34 26h74v108H34z"/><path pathLength="1" d="M132 46h74v108h-74z"/>
+                <path pathLength="1" d="M108 80h24"/><circle pathLength="1" cx="120" cy="80" r="9"/>
+                <path pathLength="1" d="M152 100l12 12 26-28"/><path pathLength="1" d="M50 56h42M50 76h42"/>
+              </svg>
+            </div>
+            <div class="stop__txt">
+              <span class="stop__n">03</span>
+              <h3 class="stop__t">Purchase order</h3>
+              <p>The customer's purchase order arrives and sets the work in motion.</p>
+            </div>
+          </div>
+        </li>
+        <li class="stop" data-name="Job">
+          <div class="stop__in">
+            <div class="stop__art" aria-hidden="true">
+              <svg viewBox="0 0 240 170" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect pathLength="1" x="56" y="30" width="128" height="124" rx="10"/><path pathLength="1" d="M100 30v-12h40v12"/>
+                <path pathLength="1" d="M78 70h84M78 94h84M78 118h52"/>
+              </svg>
+            </div>
+            <div class="stop__txt">
+              <span class="stop__n">04</span>
+              <h3 class="stop__t">Job</h3>
+              <p>The accepted order becomes a job.</p>
+            </div>
+          </div>
+        </li>
+        <li class="stop" data-name="Production">
+          <div class="stop__in">
+            <div class="stop__art" aria-hidden="true">
+              <svg viewBox="0 0 240 170" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path pathLength="1" d="M16 85h208"/><path pathLength="1" d="M46 40v90"/>
+                <path pathLength="1" d="M86 44l22 41-22 41"/><path pathLength="1" d="M128 44l22 41-22 41"/><path pathLength="1" d="M170 44l22 41-22 41"/>
+              </svg>
+            </div>
+            <div class="stop__txt">
+              <span class="stop__n">05</span>
+              <h3 class="stop__t">Production</h3>
+              <p>The job moves through production.</p>
+            </div>
+          </div>
+        </li>
+        <li class="stop" data-name="Delivery">
+          <div class="stop__in">
+            <div class="stop__art" aria-hidden="true">
+              <svg viewBox="0 0 240 170" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path pathLength="1" d="M26 50h108v84H26z"/><path pathLength="1" d="M134 74h42l34 34v26h-76"/>
+                <circle pathLength="1" cx="66" cy="138" r="13"/><circle pathLength="1" cx="178" cy="138" r="13"/>
+                <path pathLength="1" d="M58 90l12 12 24-26"/>
+              </svg>
+            </div>
+            <div class="stop__txt">
+              <span class="stop__n">06</span>
+              <h3 class="stop__t">Delivery</h3>
+              <p>The finished work is delivered to the customer.</p>
+            </div>
+          </div>
+        </li>
+      </ol>
+    </div>
+
+    <div class="container journey__rail" aria-hidden="true">
+      <div class="rail__line"><span class="rail__fill"></span><i class="rail__focus"></i></div>
+      <ol class="rail__marks">
+        <li style="--i:0">RFQ</li><li style="--i:1">Quotation</li><li style="--i:2">Purchase order</li><li style="--i:3">Job</li><li style="--i:4">Production</li><li style="--i:5">Delivery</li>
+      </ol>
+      <p class="rail__read mono" id="railRead">01 / 06 · RFQ</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRODUCTION TRACKING (in-view scrub · status dial) ============ -->
+<section class="section tracking" id="tracking" aria-labelledby="tracking-title">
+  <div class="container tracking__grid">
+    <div class="tracking__copy" data-reveal>
+      <p class="eyebrow eyebrow--mono">Production tracking</p>
+      <h2 id="tracking-title" class="h2">Knowing where every job stands.</h2>
+      <p class="lead">Production tracking is about clarity: understanding how a job is progressing without having to chase for an answer. It is one of the areas FAB-OS is being designed around.</p>
+      <ol class="themes" id="themes">
+        <li class="is-on"><span class="num">01</span><div><h3>Production visibility</h3></div></li>
+        <li><span class="num">02</span><div><h3>Workflow progress</h3></div></li>
+        <li><span class="num">03</span><div><h3>Coordination across stages</h3></div></li>
+        <li><span class="num">04</span><div><h3>Understanding job status</h3></div></li>
+        <li><span class="num">05</span><div><h3>Greater operational clarity</h3></div></li>
+      </ol>
+    </div>
+
+    <figure class="dial" id="dial" aria-hidden="true">
+      <svg viewBox="-300 -300 600 600" focusable="false">
+        <circle class="d-ticks" r="272"/>
+        <circle class="d-ring" r="250"/>
+        <circle class="d-ring d-ring--inner" r="172"/>
+        <g id="dialSpokes"></g>
+        <circle class="d-arc" r="250" pathLength="100"/>
+        <g id="dialNodes"></g>
+        <g class="d-head"><circle cx="0" cy="-250" r="8"/></g>
+        <circle class="d-aperture-ghost" r="84"/>
+        <circle class="d-aperture" r="84" pathLength="100"/>
+        <circle class="d-core" r="9"/>
+      </svg>
+    </figure>
+  </div>
+</section>
+
+<!-- ============ MATERIAL PLANNING ============ -->
+<section class="section planning" id="material-planning" aria-labelledby="planning-title">
+  <div class="container planning__grid">
+    <div class="planning__copy" data-reveal>
+      <p class="eyebrow eyebrow--mono">Material Planning</p>
+      <h2 id="planning-title" class="h2">Fabrication starts with the material.</h2>
+      <p class="lead">Arranging components on sheet material is a consideration in fabrication work, and one of the areas FAB-OS is being designed around.</p>
+    </div>
+
+    <figure class="drawing" id="drawing" data-reveal style="--i:1">
+      <svg viewBox="0 0 800 500" role="img" aria-label="Drawing: seven components arranged on a rectangular sheet of material" focusable="false">
+        <defs>
+          <pattern id="drGrid" width="20" height="20" patternUnits="userSpaceOnUse"><path class="dr-gridline" d="M20 0H0V20"/></pattern>
+        </defs>
+
+        <!-- material plane -->
+        <g class="dr-plane-g">
+          <rect class="dr-plane" x="70" y="70" width="520" height="360" rx="2"/>
+          <rect x="70" y="70" width="520" height="360" fill="url(#drGrid)"/>
+          <path class="dr-center" d="M50 250H610M330 50V450"/>
+          <path class="dr-mark" d="M56 70h-12M70 56v-12M604 70h12M590 56v-12M56 430h-12M70 444v12M604 430h12M590 444v12"/>
+          <g class="dr-dim">
+            <path d="M70 46H590M70 38v16M590 38v16M64 52l6-6 6 6M584 52l6-6 6 6"/>
+            <path d="M44 70V430M36 70h16M36 430h16"/>
+          </g>
+          <text class="dr-txt" x="330" y="36" text-anchor="middle">W</text>
+          <text class="dr-txt" x="26" y="254" text-anchor="middle" transform="rotate(-90 26 254)">L</text>
+          <text class="dr-txt dr-txt--dim" x="78" y="64">MATERIAL</text>
+        </g>
+
+        <!-- staging margin -->
+        <path class="dr-stage" d="M618 60h170v380H618z"/>
+        <text class="dr-txt dr-txt--dim" x="628" y="52">COMPONENTS</text>
+
+        <!-- components: each unit = alignment guides + the part itself -->
+        <g class="dr-unit" data-i="0" style="--sx:640;--sy:80;--ex:90;--ey:90">
+          <g class="dr-guides"><path d="M90 70V430M70 90H590"/></g>
+          <g class="dr-part"><rect width="150" height="110" rx="2"/></g>
+        </g>
+        <g class="dr-unit" data-i="1" style="--sx:650;--sy:120;--ex:260;--ey:90">
+          <g class="dr-guides"><path d="M260 70V430M70 90H590"/></g>
+          <g class="dr-part"><rect width="120" height="90" rx="2"/></g>
+        </g>
+        <g class="dr-unit" data-i="2" style="--sx:660;--sy:170;--ex:395;--ey:90">
+          <g class="dr-guides"><path d="M395 70V430"/></g>
+          <g class="dr-part"><circle cx="45" cy="45" r="45"/></g>
+        </g>
+        <g class="dr-unit" data-i="3" style="--sx:640;--sy:230;--ex:90;--ey:225">
+          <g class="dr-guides"><path d="M70 225H590"/></g>
+          <g class="dr-part"><path d="M0 0H130V50H50V110H0Z"/></g>
+        </g>
+        <g class="dr-unit" data-i="4" style="--sx:632;--sy:290;--ex:250;--ey:225">
+          <g class="dr-guides"><path d="M250 70V430"/></g>
+          <g class="dr-part"><rect width="170" height="70" rx="2"/></g>
+        </g>
+        <g class="dr-unit" data-i="5" style="--sx:660;--sy:340;--ex:440;--ey:215">
+          <g class="dr-guides"><path d="M440 70V430M70 215H590"/></g>
+          <g class="dr-part"><rect width="100" height="140" rx="2"/></g>
+        </g>
+        <g class="dr-unit" data-i="6" style="--sx:640;--sy:380;--ex:250;--ey:315">
+          <g class="dr-guides"><path d="M70 315H590"/></g>
+          <g class="dr-part"><rect width="150" height="85" rx="2"/></g>
+        </g>
+
+        <!-- closing annotation -->
+        <g class="dr-ann">
+          <path class="dr-dim" d="M90 452H540M90 446v12M540 446v12"/>
+          <text class="dr-txt" x="315" y="474" text-anchor="middle">ARRANGEMENT</text>
+        </g>
+      </svg>
+      <figcaption class="drawing__cap">Components arranged on sheet material.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ============ WHAT FAB-OS IS BUILDING (in-view scrub · light-table overlays) ============ -->
+<section class="section roadmap" id="roadmap" aria-labelledby="road-title">
+  <div class="container">
+    <div class="section__head" data-reveal>
+      <p class="eyebrow eyebrow--mono">Direction</p>
+      <h2 id="road-title" class="h2">Where <span class="nowrap">FAB-OS</span> is heading.</h2>
+      <p class="lead">The direction FAB-OS is being shaped around, rather than a delivery schedule.</p>
+    </div>
+
+    <div class="road__grid">
+      <figure class="bp" id="bp" aria-hidden="true">
+        <!-- layer 0: the frame -->
+        <div class="bp__layer bp__layer--0">
+          <svg viewBox="0 0 800 440" focusable="false">
+            <g class="bp-base">
+              <rect pathLength="1" x="60" y="70" width="220" height="130" rx="10"/>
+              <rect pathLength="1" x="290" y="70" width="220" height="130" rx="10"/>
+              <rect pathLength="1" x="520" y="70" width="220" height="130" rx="10"/>
+              <rect pathLength="1" x="60" y="250" width="220" height="130" rx="10"/>
+              <rect pathLength="1" x="290" y="250" width="220" height="130" rx="10"/>
+              <rect pathLength="1" x="520" y="250" width="220" height="130" rx="10"/>
+            </g>
+          </svg>
+        </div>
+        <!-- layer 1 -->
+        <div class="bp__layer bp__layer--1">
+          <svg viewBox="0 0 800 440" focusable="false">
+            <g class="bp-prio">
+              <rect x="60" y="70" width="220" height="130" rx="10"/>
+              <rect x="290" y="70" width="220" height="130" rx="10"/>
+              <rect x="520" y="70" width="220" height="130" rx="10"/>
+              <text x="170" y="119" text-anchor="middle"><tspan x="170" dy="0">Unified</tspan><tspan x="170" dy="22">operational</tspan><tspan x="170" dy="22">data</tspan></text>
+              <text x="400" y="119" text-anchor="middle"><tspan x="400" dy="0">Connected</tspan><tspan x="400" dy="22">workflow</tspan><tspan x="400" dy="22">management</tspan></text>
+              <text x="630" y="130" text-anchor="middle"><tspan x="630" dy="0">Stakeholder</tspan><tspan x="630" dy="22">visibility</tspan></text>
+              <path class="bp-link" d="M280 135H290M510 135H520"/>
+            </g>
+          </svg>
+        </div>
+        <!-- layer 2: long-term direction -->
+        <div class="bp__layer bp__layer--2">
+          <svg viewBox="0 0 800 440" focusable="false">
+            <g class="bp-dir">
+              <rect class="bp-frame" x="30" y="40" width="740" height="360" rx="20"/>
+              <rect class="bp-future" x="60" y="250" width="220" height="130" rx="10"/>
+              <rect class="bp-future" x="290" y="250" width="220" height="130" rx="10"/>
+              <rect class="bp-future" x="520" y="250" width="220" height="130" rx="10"/>
+              <path class="bp-stub" d="M30 220H8M770 220H792M400 400V424M400 40V16"/>
+              <circle class="bp-node" cx="8" cy="220" r="5"/><circle class="bp-node" cx="792" cy="220" r="5"/>
+              <circle class="bp-node" cx="400" cy="424" r="5"/><circle class="bp-node" cx="400" cy="16" r="5"/>
+              <text x="400" y="318" text-anchor="middle"><tspan x="400" dy="0">System-level</tspan><tspan x="400" dy="22">integration</tspan></text>
+            </g>
+          </svg>
+        </div>
+      </figure>
+
+      <ol class="road__legend" id="roadLegend">
+        <li class="is-lit" data-layer="0">
+          <span class="num">Where it stands</span>
+          <p>FAB-OS is currently in development, shaped by real fabrication workflows.</p>
+        </li>
+        <li data-layer="1">
+          <span class="num">What it is shaped around</span>
+          <p>The principles FAB-OS is being designed around.</p>
+        </li>
+        <li data-layer="2">
+          <span class="num">Where it is heading</span>
+          <p>System-level integration is one of the principles FAB-OS is being designed around.</p>
+        </li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ============ NEWS & UPDATES (deliberately still: no scene, no reveal) ============ -->
+<section class="section careers" id="news" aria-labelledby="careers-title">
+  <div class="container">
+    <div class="careers__box">
+      <div>
+        <p class="eyebrow eyebrow--mono">News &amp; updates</p>
+        <h2 id="careers-title" class="h3">Career opportunity: help us build the fabrication platform.</h2>
+        <p>We're seeking fresh technical talent skilled in full stack development, problem solving, and creative design to build our fabrication platform. As an early-stage startup, we can't offer immediate salaries yet, but provide partner opportunities with equity options.</p>
+      </div>
+      <a class="btn btn--ghost" href="mailto:catsol.official@gmail.com?subject=Career%20opportunity%20at%20CATSOL">catsol.official@gmail.com <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="section contact" id="contact" aria-labelledby="contact-title">
+  <div class="container contact__grid">
+    <div data-reveal>
+      <p class="eyebrow eyebrow--mono">Contact</p>
+      <h2 id="contact-title" class="h2">Bring clarity and structure into your operations.</h2>
+      <p class="lead">If you're looking to bring clarity and structure into your operations, we'd like to talk.</p>
+      <ul class="contact__list">
+        <li><svg class="ico" aria-hidden="true"><use href="#i-mail"/></svg><a href="mailto:catsol.official@gmail.com">catsol.official@gmail.com</a></li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg><span><a href="tel:+917305983624">+91 73059 83624</a> · <a href="tel:+917200719196">+91 72007 19196</a></span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-linkedin"/></svg><a href="https://www.linkedin.com/company/catalystsolu" rel="noopener" target="_blank">linkedin.com/company/catalystsolu<span class="sr-only"> (opens in a new tab)</span></a></li>
+      </ul>
+    </div>
+
+    <form class="form card" id="contactForm" data-recipient="catsol.official@gmail.com" data-reveal style="--i:1" novalidate>
+      <div class="field"><label for="f-name">Name</label><input id="f-name" name="name" type="text" autocomplete="name" required></div>
+      <div class="field"><label for="f-company">Company</label><input id="f-company" name="company" type="text" autocomplete="organization"></div>
+      <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" required></div>
+      <div class="field"><label for="f-msg">How can we help?</label><textarea id="f-msg" name="message" rows="5" required></textarea></div>
+      <p class="form__err" id="formErr" role="alert" hidden></p>
+      <button class="btn btn--primary" type="submit">Contact CATSOL <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+      <p class="form__hint" id="formHint">This opens your own email app with the message prepared for catsol.official@gmail.com. This website does not store or submit your details.</p>
+    </form>
+  </div>
+</section>
+
+<!-- ============ CLOSING (a flat blank folds into a formed part, driven by scroll) ============ -->
+<section class="closing" id="closing" aria-labelledby="closing-title">
+  <div class="container closing__inner">
+    <div class="closing__copy">
+      <h2 id="closing-title" class="closing__title">Clarity for every job, from enquiry to delivery.</h2>
+      <p class="lead">We design and implement digital systems that bring structure to complex operations. If that sounds like your business, we'd like to talk.</p>
+      <div class="closing__cta">
+        <a class="btn btn--primary" href="mailto:catsol.official@gmail.com?subject=Enquiry%20for%20CATSOL">Contact CATSOL <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <a class="btn btn--ghost" href="#fab-os">Explore FAB-OS</a>
+      </div>
+    </div>
+
+    <div class="fold" id="fold" aria-hidden="true">
+      <div class="fold__ground"></div>
+      <div class="fold__scene">
+        <div class="fold__obj">
+          <div class="f-base">
+            <i class="f-hole" style="left:18px;top:18px"></i><i class="f-hole" style="right:18px;top:18px"></i>
+            <i class="f-hole" style="left:18px;bottom:18px"></i><i class="f-hole" style="right:18px;bottom:18px"></i>
+            <i class="f-slot" style="left:50%;top:50%"></i>
+          </div>
+          <div class="f-wall f-back"><i class="f-hole" style="left:22%;top:50%"></i><i class="f-hole" style="left:50%;top:50%"></i><i class="f-hole" style="left:78%;top:50%"></i></div>
+          <div class="f-wall f-front"><i class="f-slot f-slot--wall" style="left:50%;top:50%"></i></div>
+          <div class="f-wall f-left"><i class="f-hole" style="left:50%;top:30%"></i><i class="f-hole" style="left:50%;top:70%"></i></div>
+          <div class="f-wall f-right"><i class="f-hole" style="left:50%;top:30%"></i><i class="f-hole" style="left:50%;top:70%"></i></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="container footer__inner">
+    <div class="footer__brand">
+      <a class="brand" href="#top" aria-label="Catalyst Solutions — back to top"><img src="assets/catsol-logo-128.png" width="40" height="40" alt=""><span class="brand__text"><strong>CATSOL</strong><span>Catalyst Solutions</span></span></a>
+      <p class="footer__tag">Driving transformation through strategic innovation.</p>
+    </div>
+
+    <nav class="footer__col" aria-labelledby="fh-company">
+      <p class="footer__h" id="fh-company">Company</p>
+      <a class="flink" href="#about">About</a>
+      <a class="flink" href="#purpose">Mission &amp; vision</a>
+      <a class="flink" href="#gap">The operational gap</a>
+      <a class="flink" href="#news">News &amp; updates</a>
+    </nav>
+
+    <nav class="footer__col" aria-labelledby="fh-fabos">
+      <p class="footer__h" id="fh-fabos">FAB-OS</p>
+      <a class="flink" href="#fab-os">Overview</a>
+      <a class="flink" href="#workflow">Workflow</a>
+      <a class="flink" href="#tracking">Production tracking</a>
+      <a class="flink" href="#material-planning">Material Planning</a>
+      <a class="flink" href="#roadmap">Direction</a>
+    </nav>
+
+    <div class="footer__col footer__contact">
+      <p class="footer__h">Contact</p>
+      <a class="flink" href="mailto:catsol.official@gmail.com"><svg class="ico" aria-hidden="true"><use href="#i-mail"/></svg>catsol.official@gmail.com</a>
+      <a class="flink" href="tel:+917305983624"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg>+91 73059 83624</a>
+      <a class="flink" href="tel:+917200719196"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg>+91 72007 19196</a>
+      <a class="flink" href="https://www.linkedin.com/company/catalystsolu" rel="noopener" target="_blank"><svg class="ico" aria-hidden="true"><use href="#i-linkedin"/></svg>LinkedIn<span class="sr-only"> (opens in a new tab)</span></a>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="footer__legal">
+      <p>© <span id="year">2026</span> Catalyst Solutions. All rights reserved.</p>
+      <a class="totop" href="#top">Back to top <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js" defer></script>
+<script src="js/scenes.js" defer></script>
+<script type="module" src="js/contact.js"></script>
+<script type="module" src="js/hero3d.js"></script>
+</body>
+</html>

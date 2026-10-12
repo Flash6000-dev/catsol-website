@@ -1,0 +1,27 @@
+# secrets and credentials
+.env
+.env.*
+*.pem
+*.key
+*.pfx
+
+# documents and internal notes are never part of this repository
+*.doc
+*.docx
+*.pdf
+*.xls*
+*.ppt*
+*.md
+docs/
+design-system/
+internal/
+notes/
+
+# tooling and build output
+node_modules/
+.vercel/
+dist/
+build/
+*.log
+.DS_Store
+Thumbs.db
